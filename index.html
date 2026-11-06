@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sistema Financeiro Belleza</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --fundo: #faf2f3;
+  --superficie: #ffffff;
+  --vinho: #5e1f3b;
+  --vinho-escuro: #451529;
+  --rosa: #c4587a;
+  --rosa-claro: #f3dde3;
+  --tinta: #2b1a22;
+  --suave: #7d6670;
+  --borda: #ebd6dc;
+  --dourado: #d9b38c;
+
+  --display: "Cormorant Garamond", Georgia, serif;
+  --texto: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+[hidden] { display: none !important; }
+
+body {
+  font-family: var(--texto);
+  color: var(--tinta);
+  background: var(--fundo);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* Cabeçalho */
+.topo {
+  background: var(--vinho);
+  color: #fff;
+  text-align: center;
+  padding: 3rem 1.25rem 4.5rem;
+}
+
+.topo h1 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(2rem, 6vw, 3.25rem);
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+}
+
+.topo p {
+  margin-top: 0.6rem;
+  color: var(--rosa-claro);
+  font-size: 1.05rem;
+}
+
+/* Estrutura */
+.pagina {
+  max-width: 980px;
+  margin: 1.5rem auto 0;
+  padding: 0 1.25rem 3rem;
+}
+
+.mes {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  padding: 1.1rem 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 8px 24px rgba(94, 31, 59, 0.08);
+  margin-bottom: 1.5rem;
+}
+
+.mes label {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--vinho);
+}
+
+.mes input { max-width: 320px; }
+
+.colunas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+/* Cards */
+.card {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.card h2 {
+  font-family: var(--display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--vinho);
+  padding-bottom: 0.6rem;
+  margin-bottom: 0.4rem;
+  border-bottom: 2px solid var(--rosa);
+}
+
+.item {
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--borda);
+}
+
+.item-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.6rem;
+}
+
+.item-nome { font-weight: 600; font-size: 1.05rem; }
+.item-preco { color: var(--rosa); font-weight: 600; }
+
+.item label {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--suave);
+  margin-bottom: 0.3rem;
+}
+
+/* Campos */
+input {
+  width: 100%;
+  font: inherit;
+  color: var(--tinta);
+  background: var(--fundo);
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  padding: 0.7rem 0.9rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+input::placeholder { color: #b7a1aa; }
+
+input:focus {
+  outline: none;
+  border-color: var(--rosa);
+  box-shadow: 0 0 0 3px rgba(196, 88, 122, 0.22);
+  background: #fff;
+}
+
+.moeda {
+  display: flex;
+  align-items: stretch;
+}
+
+.moeda span {
+  display: flex;
+  align-items: center;
+  padding: 0 0.9rem;
+  background: var(--rosa-claro);
+  color: var(--vinho);
+  font-weight: 600;
+  border: 1px solid var(--borda);
+  border-right: none;
+  border-radius: 10px 0 0 10px;
+}
+
+.moeda input { border-radius: 0 10px 10px 0; }
+
+/* Totais */
+.total {
+  margin-top: auto;
+  padding-top: 1.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.total span { color: var(--suave); font-weight: 500; }
+
+.total strong {
+  font-family: var(--display);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--vinho);
+  line-height: 1;
+}
+
+/* Saldo final */
+.saldo {
+  margin-top: 1.5rem;
+  background: var(--vinho-escuro);
+  color: #fff;
+  border-radius: 14px;
+  padding: 2.2rem 1.5rem;
+  text-align: center;
+  border-bottom: 5px solid var(--dourado);
+}
+
+.saldo h2 {
+  font-family: var(--display);
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.saldo-mes { color: var(--rosa-claro); margin-top: 0.2rem; }
+
+.saldo-rotulo { margin-top: 1.4rem; color: var(--dourado); font-weight: 500; }
+
+.saldo-valor {
+  font-family: var(--display);
+  font-size: clamp(3rem, 11vw, 5rem);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* Botão */
+.botao {
+  display: block;
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 1.05rem 1.5rem;
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #fff;
+  background: var(--rosa);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.botao:hover { background: #ad4767; }
+.botao:active { transform: translateY(1px); }
+.botao:focus-visible { outline: 3px solid var(--vinho); outline-offset: 3px; }
+
+.rodape {
+  text-align: center;
+  color: var(--suave);
+  font-size: 0.85rem;
+  padding: 0 1rem 2rem;
+}
+
+/* Celular */
+@media (max-width: 720px) {
+  .colunas { grid-template-columns: 1fr; }
+  .mes { flex-direction: column; align-items: stretch; gap: 0.5rem; }
+  .mes input { max-width: none; }
+  .card { padding: 1.3rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+/* Dashboard e histórico */
+.dashboard,
+.formulario-secao,
+.historico {
+  margin-bottom: 2rem;
+}
+
+.secao-cabecalho,
+.grafico-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.secao-cabecalho h2,
+.grafico-cabecalho h2 {
+  color: var(--vinho);
+  font-family: var(--display);
+  font-size: 2rem;
+  line-height: 1.1;
+}
+
+.sobretitulo {
+  color: var(--rosa);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  margin-bottom: 0.25rem;
+}
+
+.filtro-mes {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.filtro-mes label {
+  color: var(--suave);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.filtro-mes select {
+  min-width: 150px;
+  padding: 0.65rem 2rem 0.65rem 0.8rem;
+  color: var(--vinho);
+  background: #fff;
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  font: inherit;
+}
+
+.indicadores {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.indicador {
+  position: relative;
+  min-height: 142px;
+  padding: 1.2rem;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(94, 31, 59, 0.05);
+}
+
+.indicador-icone {
+  display: inline-grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  margin-bottom: 0.65rem;
+  color: var(--vinho);
+  background: var(--rosa-claro);
+  border-radius: 9px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.indicador-icone-rosa { color: var(--rosa); }
+.indicador-icone-dourado { color: var(--dourado); background: rgba(217, 179, 140, 0.17); }
+
+.indicador p {
+  color: var(--suave);
+  font-size: 0.86rem;
+  margin-bottom: 0.2rem;
+}
+
+.indicador strong {
+  color: var(--vinho);
+  font-family: var(--display);
+  font-size: 1.65rem;
+  line-height: 1.1;
+}
+
+.indicador-destaque {
+  background: var(--vinho-escuro);
+  border-color: var(--vinho-escuro);
+}
+
+.indicador-destaque p,
+.indicador-destaque strong { color: #fff; }
+
+.grafico {
+  margin-top: 1.1rem;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(94, 31, 59, 0.05);
+}
+
+.grafico-cabecalho { align-items: center; margin-bottom: 1.5rem; }
+
+.grafico-legenda {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--suave);
+  font-size: 0.8rem;
+}
+
+.grafico-legenda i {
+  width: 0.65rem;
+  height: 0.65rem;
+  margin-left: 0.6rem;
+  border-radius: 50%;
+}
+
+.legenda-receita { background: var(--vinho); }
+.legenda-despesa { background: var(--rosa); }
+
+.barra-grupo + .barra-grupo { margin-top: 1rem; }
+
+.barra-rotulo {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.88rem;
+}
+
+.barra-rotulo span { color: var(--suave); }
+.barra-rotulo strong { color: var(--tinta); }
+
+.barra-trilho {
+  height: 0.7rem;
+  overflow: hidden;
+  background: var(--rosa-claro);
+  border-radius: 999px;
+}
+
+.barra {
+  height: 100%;
+  min-width: 0;
+  border-radius: inherit;
+  transition: width 0.25s ease;
+}
+
+.barra-receita { background: var(--vinho); }
+.barra-despesa { background: var(--rosa); }
+
+.mensagens { margin-bottom: 1rem; }
+.mensagens[hidden] { display: none; }
+
+.mensagem {
+  padding: 0.85rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.mensagem-sucesso {
+  color: #285d43;
+  background: #e8f4ec;
+  border-color: #c8e5d2;
+}
+
+.mensagem-erro {
+  color: #8a2e3e;
+  background: #fff0f1;
+  border-color: #f0cbd1;
+}
+
+.formulario-secao > form > .mes { margin-bottom: 1.5rem; }
+.acoes-formulario { display: flex; align-items: center; gap: 0.75rem; }
+.acoes-formulario .botao { width: auto; flex: 1; margin-top: 1rem; }
+
+.botao-secundario {
+  display: inline-flex;
+  min-height: 3.3rem;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  padding: 0.8rem 1.2rem;
+  color: var(--vinho);
+  background: #fff;
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.botao-secundario:hover { background: var(--rosa-claro); border-color: var(--rosa); }
+
+.grupo-historico {
+  margin-top: 1.2rem;
+  padding: 1.2rem;
+  background: #fff;
+  border: 1px solid var(--borda);
+  border-radius: 14px;
+}
+
+.grupo-historico h3 {
+  margin-bottom: 0.8rem;
+  color: var(--vinho);
+  font-family: var(--display);
+  font-size: 1.55rem;
+}
+
+.tabela-contorno { overflow-x: auto; }
+
+.historico table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.historico th {
+  padding: 0.7rem;
+  color: var(--suave);
+  background: var(--fundo);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.historico td {
+  padding: 0.8rem 0.7rem;
+  border-bottom: 1px solid var(--borda);
+  font-size: 0.88rem;
+}
+
+.valor-saldo { color: var(--vinho); font-weight: 700; }
+.acoes-registro { display: flex; align-items: center; gap: 0.8rem; }
+.acoes-registro form { display: inline; }
+
+.acao-link {
+  padding: 0;
+  color: var(--vinho);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.acao-excluir { color: #a23f52; }
+.historico-vazio { padding: 1.2rem; color: var(--suave); background: #fff; border: 1px dashed var(--borda); border-radius: 12px; }
+
+@media (max-width: 850px) {
+  .indicadores { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 560px) {
+  .secao-cabecalho,
+  .grafico-cabecalho { align-items: stretch; flex-direction: column; }
+  .filtro-mes { align-items: stretch; flex-direction: column; }
+  .filtro-mes select { width: 100%; }
+  .indicadores { gap: 0.65rem; }
+  .indicador { min-height: 130px; padding: 0.9rem; }
+  .indicador strong { font-size: 1.35rem; }
+  .grafico { padding: 1.1rem; }
+  .acoes-formulario { align-items: stretch; flex-direction: column; }
+  .acoes-formulario .botao,
+  .botao-secundario { width: 100%; }
+  .grupo-historico { padding: 0.8rem; }
+}
+  </style>
+</head>
+<body>
+  <header class="topo">
+    <h1>Sistema Financeiro Belleza</h1>
+    <p>Bem-vindo ao sistema financeiro da Beleza!</p>
+  </header>
+
+  <main class="pagina">
+    <div class="mensagens" id="mensagens" role="status" aria-live="polite" hidden></div>
+
+    <section class="dashboard" aria-labelledby="titulo-dashboard">
+      <div class="secao-cabecalho">
+        <div>
+          <p class="sobretitulo">VISÃO GERAL</p>
+          <h2 id="titulo-dashboard">Resumo do mês</h2>
+        </div>
+        <div class="filtro-mes">
+          <label for="filtro-mes">Consultar mês</label>
+          <select id="filtro-mes" disabled>
+            <option value="">Nenhum mês salvo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="indicadores">
+        <article class="indicador">
+          <span class="indicador-icone" aria-hidden="true">↗</span>
+          <p>Total de receitas</p>
+          <strong id="total-receitas">R$ 0,00</strong>
+        </article>
+        <article class="indicador">
+          <span class="indicador-icone indicador-icone-rosa" aria-hidden="true">↘</span>
+          <p>Total de despesas</p>
+          <strong id="total-despesas">R$ 0,00</strong>
+        </article>
+        <article class="indicador indicador-destaque">
+          <span class="indicador-icone indicador-icone-dourado" aria-hidden="true">◇</span>
+          <p>Saldo final</p>
+          <strong id="total-saldo">R$ 0,00</strong>
+        </article>
+        <article class="indicador">
+          <span class="indicador-icone indicador-icone-rosa" aria-hidden="true">▦</span>
+          <p>Produtos vendidos</p>
+          <strong id="total-vendas">0</strong>
+        </article>
+      </div>
+
+      <section class="grafico card" aria-labelledby="titulo-grafico">
+        <div class="grafico-cabecalho">
+          <div>
+            <p class="sobretitulo">COMPARATIVO</p>
+            <h2 id="titulo-grafico">Receitas e despesas</h2>
+          </div>
+          <span class="grafico-legenda"><i class="legenda-receita"></i> Receitas <i class="legenda-despesa"></i> Despesas</span>
+        </div>
+        <div class="barra-grupo">
+          <div class="barra-rotulo"><span>Receitas</span><strong id="grafico-receitas">R$ 0,00</strong></div>
+          <div class="barra-trilho"><div class="barra barra-receita" id="barra-receitas" style="width: 0%"></div></div>
+        </div>
+        <div class="barra-grupo">
+          <div class="barra-rotulo"><span>Despesas</span><strong id="grafico-despesas">R$ 0,00</strong></div>
+          <div class="barra-trilho"><div class="barra barra-despesa" id="barra-despesas" style="width: 0%"></div></div>
+        </div>
+      </section>
+    </section>
+
+    <section class="formulario-secao" aria-labelledby="titulo-formulario">
+      <div class="secao-cabecalho">
+        <div>
+          <p class="sobretitulo" id="modo-formulario">NOVA MOVIMENTAÇÃO</p>
+          <h2 id="titulo-formulario">Registrar receitas e despesas</h2>
+        </div>
+      </div>
+
+      <form id="form-financeiro" novalidate>
+        <section class="mes">
+          <label for="mes">Mês</label>
+          <input type="text" id="mes" name="mes" placeholder="Ex.: Novembro" autocomplete="off" required>
+        </section>
+
+        <div class="colunas">
+          <section class="card" aria-labelledby="titulo-receitas">
+            <h2 id="titulo-receitas">Receitas</h2>
+            <div class="item">
+              <div class="item-info"><span class="item-nome">Batom</span><span class="item-preco">R$ 20,00</span></div>
+              <label for="produto1">Quantidade vendida</label>
+              <input type="number" id="produto1" name="produto1" min="0" step="1" inputmode="numeric" placeholder="0">
+            </div>
+            <div class="item">
+              <div class="item-info"><span class="item-nome">Base</span><span class="item-preco">R$ 35,00</span></div>
+              <label for="produto2">Quantidade vendida</label>
+              <input type="number" id="produto2" name="produto2" min="0" step="1" inputmode="numeric" placeholder="0">
+            </div>
+            <div class="item">
+              <div class="item-info"><span class="item-nome">Pó Compacto</span><span class="item-preco">R$ 25,00</span></div>
+              <label for="produto3">Quantidade vendida</label>
+              <input type="number" id="produto3" name="produto3" min="0" step="1" inputmode="numeric" placeholder="0">
+            </div>
+            <div class="total"><span>Receita deste lançamento</span><strong id="receita-total">R$ 0,00</strong></div>
+          </section>
+
+          <section class="card" aria-labelledby="titulo-despesas">
+            <h2 id="titulo-despesas">Despesas</h2>
+            <div class="item">
+              <div class="item-info"><span class="item-nome">Funcionários</span><span class="item-preco">Salário por funcionário: R$ 700,00</span></div>
+              <label for="quantidade_funcionarios">Quantidade de funcionários</label>
+              <input type="number" id="quantidade_funcionarios" name="funcionarios" min="0" step="1" inputmode="numeric" placeholder="0">
+            </div>
+            <div class="item">
+              <div class="item-info"><span class="item-nome">Aluguel</span></div>
+              <label for="despesas2">Valor do aluguel</label>
+              <div class="moeda"><span>R$</span><input type="number" id="despesas2" name="aluguel" min="0" step="0.01" inputmode="decimal" placeholder="0,00"></div>
+            </div>
+            <div class="item">
+              <div class="item-info"><span class="item-nome">Energia</span></div>
+              <label for="despesas3">Valor gasto com energia</label>
+              <div class="moeda"><span>R$</span><input type="number" id="despesas3" name="energia" min="0" step="0.01" inputmode="decimal" placeholder="0,00"></div>
+            </div>
+            <div class="total"><span>Despesas deste lançamento</span><strong id="despesas-total">R$ 0,00</strong></div>
+          </section>
+        </div>
+
+        <section class="saldo" aria-labelledby="titulo-saldo">
+          <h2 id="titulo-saldo">Saldo final deste lançamento</h2>
+          <p class="saldo-mes">Mês: <span id="saldo-mes">—</span></p>
+          <p class="saldo-rotulo">Saldo final</p>
+          <p class="saldo-valor" id="saldo-final">R$ 0,00</p>
+        </section>
+
+        <div class="acoes-formulario">
+          <button type="submit" class="botao" id="botao-salvar">Salvar lançamento</button>
+          <button type="reset" class="botao-secundario" id="botao-limpar">Limpar formulário</button>
+          <button type="button" class="botao-secundario" id="botao-cancelar" hidden>Cancelar edição</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="historico" aria-labelledby="titulo-historico">
+      <div class="secao-cabecalho">
+        <div><p class="sobretitulo">REGISTROS SALVOS</p><h2 id="titulo-historico">Histórico financeiro</h2></div>
+      </div>
+      <div id="historico-conteudo">
+        <p class="historico-vazio">Carregando os lançamentos salvos...</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">Belleza · Sistema Financeiro</footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
